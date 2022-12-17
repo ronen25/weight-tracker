@@ -1,5 +1,5 @@
 import type { GetServerSideProps } from "next";
-import { signIn, useSession } from "next-auth/react";
+import { signIn } from "next-auth/react";
 import Head from "next/head";
 import { useState } from "react";
 import { type SubmitHandler, useForm } from "react-hook-form";

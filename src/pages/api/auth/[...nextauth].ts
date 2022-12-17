@@ -6,9 +6,30 @@ import { prisma } from "../../../server/db/client";
 import crypto from "crypto";
 
 export const authOptions: NextAuthOptions = {
-  // Include user.id on session
   pages: {
     signIn: "/login",
+  },
+  session: {
+    strategy: "jwt",
+  },
+  callbacks: {
+    async jwt({ token, user }) {
+      user && (token.user = user);
+      return token;
+    },
+    async session({ session, token }) {
+      const { user } = token;
+      const userData = user as { id: string; email: string };
+
+      session = {
+        ...session,
+        user: {
+          id: userData.id,
+          ...session.user,
+        },
+      };
+      return session;
+    },
   },
   providers: [
     CredentialsProvider({
@@ -41,7 +62,7 @@ export const authOptions: NextAuthOptions = {
           .toString("hex");
 
         if (user.password_hash === provided_password_hash) {
-          return user;
+          return { id: user.id, email: user.email };
         }
 
         return null;

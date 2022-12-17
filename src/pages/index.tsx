@@ -1,8 +1,13 @@
 import type { GetServerSideProps, NextPage } from "next";
 import Head from "next/head";
 import { getServerAuthSession } from "../server/common/get-server-auth-session";
+import { prisma } from "../server/db/client";
 
-const Home: NextPage = () => {
+interface Props {
+  userData: any;
+}
+
+const Home = ({ userData }: Props) => {
   return (
     <>
       <Head>
@@ -27,8 +32,23 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
     };
   }
 
+  const userData = await prisma.users.findFirst({
+    where: {
+      id: session.user?.id,
+    },
+  });
+
   return {
-    props: {},
+    props: {
+      userData: {
+        id: userData?.id,
+        firstName: userData?.first_name,
+        lastName: userData?.last_name,
+        email: userData?.email,
+        sex: userData?.sex,
+        dob: userData?.dob?.toUTCString(),
+      },
+    },
   };
 };
 

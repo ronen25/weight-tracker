@@ -22,4 +22,5 @@ model users {
   password_hash String    @db.VarChar
   sex           Int?
   dob           DateTime? @db.Date
+  avatar_url    String?   @db.VarChar
 }

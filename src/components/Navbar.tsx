@@ -37,6 +37,13 @@ const Navbar = ({ avatarUrl, signOutCallback }: Props) => {
 
               {avatarUrl ? (
                 <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+                  <a
+                    href="#"
+                    className="mr-2 inline-flex items-center justify-center rounded-md border border-transparent bg-green-600 px-5 py-1 text-base font-medium text-white hover:bg-green-800"
+                  >
+                    Add Weight
+                  </a>
+
                   <button
                     type="button"
                     className="rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"

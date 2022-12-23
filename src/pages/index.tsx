@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { useAtom } from "jotai";
 import type { GetServerSideProps } from "next";
 import Head from "next/head";
@@ -23,6 +23,21 @@ const Home = ({ userData }: Props) => {
   useEffect(() => {
     setUserData(userData);
   }, []);
+
+  const showDataScreen = useCallback(() => {
+    if (isError) {
+      return <div>ERROR: {JSON.stringify(error)}</div>;
+    }
+
+    // TODO: Remove index used here
+    return (
+      <ul className="sm:w-4/5">
+        {new Array(1000).fill(data[0]).map((item, index) => (
+          <WeightItem key={index} weight={item} />
+        ))}
+      </ul>
+    );
+  }, [isError, data, error]);
 
   const greeting = () => {
     const currentDate = new Date();
@@ -55,16 +70,7 @@ const Home = ({ userData }: Props) => {
         </h1>
 
         <div className="flex grow items-center justify-center">
-          {isLoading && <LoadingSpinner />}
-          {isError ? (
-            <div>ERROR: {JSON.stringify(error)}</div>
-          ) : (
-            <ul className="lg:w-4/5">
-              {new Array(1000).fill(data[0]).map((item) => (
-                <WeightItem key={item.id} weight={item} />
-              ))}
-            </ul>
-          )}
+          {isLoading ? <LoadingSpinner /> : showDataScreen()}
         </div>
       </main>
     </>

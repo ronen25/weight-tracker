@@ -22,7 +22,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
   return (
     <SessionProvider session={session}>
       <QueryClientProvider client={queryClient}>
-        {router.route !== "/_error" && (
+        {router.route !== "/login" && router.route !== "/_error" && (
           <Navbar avatarUrl={userData?.avatarUrl} signOutCallback={signOut} />
         )}
         <Component {...pageProps} />

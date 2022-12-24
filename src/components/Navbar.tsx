@@ -1,9 +1,11 @@
-import { Fragment } from "react";
+import { Fragment, useEffect } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { BellIcon, PlusCircleIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import LoadingSpinner from "./LoadingSpinner";
 import AddWeightButton from "./AddWeightButton";
+import { useAtom } from "jotai";
+import UserDetailsAtom from "../atoms/UserDetailsAtom";
 
 interface Props {
   avatarUrl?: string;
@@ -15,20 +17,33 @@ function classNames(...classes: any) {
 }
 
 const Navbar = ({ avatarUrl, signOutCallback }: Props) => {
+  const [userData, _] = useAtom(UserDetailsAtom);
+
+  const greeting = () => {
+    const currentDate = new Date();
+    const hour = currentDate.getHours();
+
+    let format = "";
+    if (hour >= 6 && hour < 11) {
+      format = "Good morning";
+    } else if (hour >= 11 && hour < 16) {
+      format = "Good day";
+    } else if (hour >= 16 && hour <= 18) {
+      format = "Good evening";
+    } else {
+      format = "Good night";
+    }
+
+    return `${format}, ${userData.firstName}.`;
+  };
+
   return (
     <Disclosure as="nav" className="bg-gray-800">
       <>
         <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
           <div className="relative flex h-16 justify-between">
             <div className="flex flex-1 items-center sm:items-stretch sm:justify-start">
-              <a
-                href="#"
-                className="mr-2 inline-block items-center justify-center rounded-md border border-transparent bg-green-600 px-5 py-1 text-base text-white hover:bg-green-800 sm:hidden"
-              >
-                <PlusCircleIcon className="h-8 w-8" />
-              </a>
-
-              <div className="hidden flex-shrink-0 items-center self-center sm:flex">
+              <div className="flex flex-shrink-0 items-center self-center">
                 <img
                   className="block h-8 w-auto lg:hidden"
                   src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
@@ -39,13 +54,13 @@ const Navbar = ({ avatarUrl, signOutCallback }: Props) => {
                   src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
                   alt="Your Company"
                 />
+
+                <div className="ml-2 text-white">{greeting()}</div>
               </div>
             </div>
 
             {avatarUrl ? (
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                <AddWeightButton />
-
                 <button
                   type="button"
                   className="rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"

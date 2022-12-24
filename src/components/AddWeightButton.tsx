@@ -7,9 +7,9 @@ interface Props {
 const AddWeightButton = ({ className = "" }: Props) => (
   <a
     href="#"
-    className={`mr-2 hidden items-center justify-center rounded-md border border-transparent bg-green-600 px-5 py-1 text-base text-white hover:bg-green-800 sm:flex ${className}`}
+    className={`flex items-center justify-center rounded-md border border-transparent bg-green-600 py-0.5 text-base text-white hover:bg-green-800 ${className}`}
   >
-    <PlusSmallIcon className="h-6 w-6" />
+    <PlusSmallIcon className="m-0 h-8 w-8 p-0" />
     <span>Add Weight</span>
   </a>
 );

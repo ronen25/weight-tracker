@@ -6,8 +6,10 @@ const Weight = z.object({
   note: z.string(),
 });
 
+const WeightMeasurementDate = z.string().datetime();
+
 type WeightType = z.infer<typeof Weight>;
 
 const WeightsData = z.array(Weight);
 
-export { Weight, type WeightType, WeightsData };
+export { Weight, WeightMeasurementDate, type WeightType, WeightsData };

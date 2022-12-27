@@ -8,10 +8,12 @@ datasource db {
 }
 
 model weights {
-  id    Int      @id(map: "weights_pk") @default(autoincrement())
-  date  DateTime @db.Timestamptz(6)
-  value Decimal? @db.Decimal
-  note  String?  @db.VarChar
+  id      Int      @id(map: "weights_pk") @default(autoincrement())
+  date    DateTime @unique(map: "weights_un") @db.Timestamptz(6)
+  value   Decimal? @db.Decimal
+  note    String?  @db.VarChar
+  user_id String?  @db.Uuid
+  users   users?   @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "weights_fk")
 }
 
 model users {
@@ -23,4 +25,5 @@ model users {
   sex           Int?
   dob           DateTime? @db.Date
   avatar_url    String?   @db.VarChar
+  weights       weights[]
 }

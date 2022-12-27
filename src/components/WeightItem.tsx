@@ -3,9 +3,10 @@ import type { WeightType } from "../models/WeightData";
 
 interface Props {
   weight: WeightType;
+  onDeleteClick: (date: Date) => void;
 }
 
-const WeightItem = ({ weight }: Props) => {
+const WeightItem = ({ weight, onDeleteClick }: Props) => {
   return (
     <li className="group my-1 flex items-center justify-between rounded p-2 py-1 transition-colors hover:bg-slate-200">
       <div className="flex items-center">
@@ -20,7 +21,10 @@ const WeightItem = ({ weight }: Props) => {
       </div>
 
       <div className="ml-10 flex opacity-0 group-hover:opacity-100">
-        <div className="ml-1 cursor-pointer rounded p-1 transition-colors hover:bg-slate-400">
+        <div
+          className="ml-1 cursor-pointer rounded p-1 transition-colors hover:bg-slate-400"
+          onClick={() => onDeleteClick(weight.date)}
+        >
           <XMarkIcon className="h-4 w-4" />
         </div>
       </div>

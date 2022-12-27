@@ -5,6 +5,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import type { WeightType } from "../../models/WeightData";
 import axios from "axios";
 import LoadingSpinner from "../LoadingSpinner";
+import getErrorText from "../../lib/util/error";
 
 interface Props {
   open: boolean;
@@ -162,7 +163,7 @@ const AddWeightModal = ({ open, setOpen }: Props) => {
                 <div className="justify-end bg-gray-50 px-4 py-3 sm:flex sm:flex-row sm:px-6">
                   {isError && (
                     <div className="max-h-8 overflow-auto text-xs text-red-600">
-                      {JSON.stringify((error as any).response?.data)}
+                      {getErrorText(error)}
                     </div>
                   )}
                   {mutationIsLoading ? (

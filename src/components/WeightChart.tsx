@@ -50,7 +50,7 @@ const WeightChart = ({ data }: Props) => {
   const DATE_FORMAT = "%Y-%m-%dT%H:%M:%S.%L%Z";
 
   return (
-    <div className="h-48">
+    <div className="h-48 w-full">
       <ResponsiveLine
         data={processedData}
         margin={{

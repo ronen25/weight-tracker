@@ -29,7 +29,7 @@ const WeightDataList = ({ data }: Props) => {
   };
 
   return (
-    <ul className="sm:w-4/5">
+    <ul className="xs:mx-2 sm:mx-0 sm:w-[300px]">
       {isLoading ? (
         <LoadingSpinner />
       ) : (

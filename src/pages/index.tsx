@@ -51,7 +51,7 @@ const Home = ({ userData }: Props) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="flex h-full flex-col">
+      <main className="flex h-full flex-col items-center">
         <AddWeightModal
           open={visibleModal === "addWeight"}
           setOpen={(value: boolean) => {
@@ -60,7 +60,9 @@ const Home = ({ userData }: Props) => {
         />
         {data && <WeightChart data={data} />}
 
-        <div className="px-2">
+        <div className="my-3 w-full border-t-2"></div>
+
+        <div className="w-full px-2 sm:w-96 sm:px-0">
           <AddWeightButton onClick={onAddWeightClick} />
         </div>
 

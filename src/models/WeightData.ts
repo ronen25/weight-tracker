@@ -2,7 +2,6 @@ import { z } from "zod";
 
 const Weight = z.object({
   date: z.date(),
-  id: z.number().gte(1),
   value: z.number(),
   note: z.string(),
 });

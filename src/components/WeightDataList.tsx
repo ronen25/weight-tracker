@@ -1,4 +1,4 @@
-import { WeightType } from "../models/WeightData";
+import type { WeightType } from "../models/WeightData";
 import NoWeights from "./NoWeights";
 import WeightItem from "./WeightItem";
 

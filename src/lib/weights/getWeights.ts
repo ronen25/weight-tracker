@@ -1,5 +1,5 @@
-import { WeightsData } from "../models/WeightData";
-import { prisma } from "../server/db/client";
+import { WeightsData } from "../../models/WeightData";
+import { prisma } from "../../server/db/client";
 
 const getWeights = async () => {
   const data = await prisma.weights.findMany();

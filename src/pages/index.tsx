@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useAtom } from "jotai";
 import type { GetServerSideProps } from "next";
 import Head from "next/head";
@@ -9,22 +9,23 @@ import { prisma } from "../server/db/client";
 import { useQuery } from "@tanstack/react-query";
 import LoadingSpinner from "../components/LoadingSpinner";
 import WeightDataScreen from "../components/WeightDataList";
-import AddWeightButton from "../components/AddWeightButton";
-import { Line, ResponsiveLine } from "@nivo/line";
+import AddWeightButton from "../components/AddWeight/AddWeightButton";
 
-import type { Weight, WeightType } from "../models/WeightData";
-import { lerpRange } from "../lib/util/lerp";
 import WeightChart from "../components/WeightChart";
+import AddWeightModal from "../components/AddWeight/AddWeightModal";
 
 interface Props {
   userData: UserData;
 }
+
+type CurrentlyVisibleModal = "addWeight" | null;
 
 const Home = ({ userData }: Props) => {
   const { isLoading, data, error } = useQuery(["weights"], () =>
     fetch("/api/weights").then((res) => res.json())
   );
   const [_, setUserData] = useAtom(UserDetailsAtom);
+  const [visibleModal, setVisibleModal] = useState<CurrentlyVisibleModal>(null);
 
   useEffect(() => {
     setUserData(userData);
@@ -34,9 +35,13 @@ const Home = ({ userData }: Props) => {
     if (isLoading) {
       return <LoadingSpinner />;
     } else if (error) {
-      return <div>ERROR: {JSON.stringify(error)}</div>;
+      return <div>ERROR: {JSON.stringify(error ?? "An error occurred")}</div>;
     }
   }, [isLoading, error]);
+
+  const onAddWeightClick = () => {
+    setVisibleModal("addWeight");
+  };
 
   return (
     <>
@@ -47,9 +52,17 @@ const Home = ({ userData }: Props) => {
       </Head>
 
       <main className="flex h-full flex-col">
+        <AddWeightModal
+          open={visibleModal === "addWeight"}
+          setOpen={(value: boolean) => {
+            value ? setVisibleModal("addWeight") : setVisibleModal(null);
+          }}
+        />
         {data && <WeightChart data={data} />}
 
-        <AddWeightButton />
+        <div className="px-2">
+          <AddWeightButton onClick={onAddWeightClick} />
+        </div>
 
         <div className="flex grow items-center justify-center">
           {!data ? getNoDataScreen() : <WeightDataScreen data={data} />}

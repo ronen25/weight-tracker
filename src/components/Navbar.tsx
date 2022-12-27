@@ -3,7 +3,7 @@ import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { BellIcon, PlusCircleIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import LoadingSpinner from "./LoadingSpinner";
-import AddWeightButton from "./AddWeightButton";
+import AddWeightButton from "./AddWeight/AddWeightButton";
 import { useAtom } from "jotai";
 import UserDetailsAtom from "../atoms/UserDetailsAtom";
 

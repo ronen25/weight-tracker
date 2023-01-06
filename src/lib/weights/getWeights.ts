@@ -6,6 +6,9 @@ const getWeights = async (userId: string) => {
     where: {
       user_id: userId,
     },
+    orderBy: {
+      date: "asc",
+    },
   });
 
   return WeightsData.parseAsync(

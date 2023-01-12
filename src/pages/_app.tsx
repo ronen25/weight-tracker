@@ -1,14 +1,14 @@
-import type { AppType } from "next/app";
-import { type Session } from "next-auth";
-import { SessionProvider, signOut } from "next-auth/react";
-import { useRouter } from "next/router";
-import { useAtom } from "jotai";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import type { AppType } from 'next/app';
+import { type Session } from 'next-auth';
+import { SessionProvider, signOut } from 'next-auth/react';
+import { useRouter } from 'next/router';
+import { useAtom } from 'jotai';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
-import Navbar from "../components/Navbar";
-import UserDetailsAtom from "../atoms/UserDetailsAtom";
+import Navbar from '../components/Navbar';
+import UserDetailsAtom from '../atoms/UserDetailsAtom';
 
-import "../styles/globals.css";
+import '../styles/globals.css';
 
 const queryClient = new QueryClient();
 
@@ -17,12 +17,12 @@ const MyApp: AppType<{ session: Session | null }> = ({
   pageProps: { session, ...pageProps },
 }) => {
   const router = useRouter();
-  const [userData, _] = useAtom(UserDetailsAtom);
+  const [userData] = useAtom(UserDetailsAtom);
 
   return (
     <SessionProvider session={session}>
       <QueryClientProvider client={queryClient}>
-        {router.route !== "/login" && router.route !== "/_error" && (
+        {router.route !== '/login' && router.route !== '/_error' && (
           <Navbar avatarUrl={userData?.avatarUrl} signOutCallback={signOut} />
         )}
         <Component {...pageProps} />

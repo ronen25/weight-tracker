@@ -1,5 +1,5 @@
-import { WeightsData } from "../../models/WeightData";
-import { prisma } from "../../server/db/client";
+import { WeightsData } from '../../models/WeightData';
+import { prisma } from '../../server/db/client';
 
 const getWeights = async (userId: string) => {
   const data = await prisma.weights.findMany({
@@ -7,7 +7,7 @@ const getWeights = async (userId: string) => {
       user_id: userId,
     },
     orderBy: {
-      date: "asc",
+      date: 'desc',
     },
   });
 

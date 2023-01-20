@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { useAtom } from 'jotai';
 import type { GetServerSideProps } from 'next';
 import Head from 'next/head';
-import UserDetailsAtom from '../atoms/UserDetailsAtom';
+import UserDetailsAtom from '../stores/UserDetailsAtom';
 import type UserData from '../models/UserData';
 import { getServerAuthSession } from '../server/common/get-server-auth-session';
 import { prisma } from '../server/db/client';

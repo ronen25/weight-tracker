@@ -1,6 +1,6 @@
 import { ResponsiveLine } from '@nivo/line';
 import { useMemo } from 'react';
-import { lerpRange } from '../lib/util/lerp';
+import { lerpRange } from '../utils/lerp';
 import type { WeightType } from '../models/WeightData';
 import _ from 'lodash';
 

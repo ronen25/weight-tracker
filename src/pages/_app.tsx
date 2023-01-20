@@ -6,7 +6,7 @@ import { useAtom } from 'jotai';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 import Navbar from '../components/Navbar';
-import UserDetailsAtom from '../atoms/UserDetailsAtom';
+import UserDetailsAtom from '../stores/UserDetailsAtom';
 
 import '../styles/globals.css';
 

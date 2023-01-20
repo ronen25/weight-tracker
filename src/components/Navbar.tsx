@@ -4,7 +4,7 @@ import { BellIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import LoadingSpinner from './LoadingSpinner';
 import { useAtom } from 'jotai';
-import UserDetailsAtom from '../atoms/UserDetailsAtom';
+import UserDetailsAtom from '../stores/UserDetailsAtom';
 import Image from 'next/image';
 
 interface Props {

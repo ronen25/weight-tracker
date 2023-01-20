@@ -5,7 +5,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import type { WeightType } from '../../models/WeightData';
 import axios from 'axios';
 import LoadingSpinner from '../LoadingSpinner';
-import getErrorText from '../../lib/util/error';
+import getErrorText from '../../utils/error';
 
 interface Props {
   open: boolean;
@@ -46,6 +46,7 @@ const AddWeightModal = ({ open, setOpen }: Props) => {
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
     const weight: WeightType = {
+      id: 0,
       date: new Date(data.date),
       value: data.value,
       note: data.note,

@@ -1,8 +1,8 @@
-import { ResponsiveLine } from "@nivo/line";
-import { useMemo } from "react";
-import { lerpRange } from "../lib/util/lerp";
-import type { WeightType } from "../models/WeightData";
-import _ from "lodash";
+import { ResponsiveLine } from '@nivo/line';
+import { useMemo } from 'react';
+import { lerpRange } from '../lib/util/lerp';
+import type { WeightType } from '../models/WeightData';
+import _ from 'lodash';
 
 interface Props {
   data: WeightType[];
@@ -12,8 +12,8 @@ const WeightChart = ({ data }: Props) => {
   const processedData = useMemo(() => {
     return [
       {
-        id: "weights",
-        color: "hsl(235, 70%, 50%)",
+        id: 'weights',
+        color: 'hsl(235, 70%, 50%)',
         data: data.map((item) => ({
           x: item.date,
           y: item.value,
@@ -41,16 +41,16 @@ const WeightChart = ({ data }: Props) => {
 
   const weightTickRange = useMemo(() => {
     if (minMaxData.max !== minMaxData.min) {
-      return lerpRange(minMaxData.min, minMaxData.max, 5);
+      return lerpRange(30, minMaxData.max, 5);
     }
 
     return [minMaxData.min];
   }, [minMaxData]);
 
-  const DATE_FORMAT = "%Y-%m-%dT%H:%M:%S.%L%Z";
+  const DATE_FORMAT = '%Y-%m-%dT%H:%M:%S.%L%Z';
 
   return (
-    <div className="h-48 w-full">
+    <div className='h-48 w-full'>
       <ResponsiveLine
         data={processedData}
         margin={{
@@ -61,26 +61,26 @@ const WeightChart = ({ data }: Props) => {
         }}
         lineWidth={4}
         axisBottom={{
-          format: "%d/%m",
+          format: '%d/%m',
           tickRotation: 45,
-          tickValues: "every day",
-          legend: "Date",
+          tickValues: 'every day',
+          legend: 'Date',
           legendOffset: 40,
-          legendPosition: "middle",
+          legendPosition: 'middle',
         }}
         xScale={{
-          type: "time",
+          type: 'time',
           format: DATE_FORMAT,
-          precision: "day",
+          precision: 'day',
         }}
         xFormat={`time:${DATE_FORMAT}`}
         axisLeft={{
           tickSize: 5,
           tickPadding: 5,
           tickRotation: 0,
-          legend: "Weight (kg)",
+          legend: 'Weight (kg)',
           legendOffset: -36,
-          legendPosition: "middle",
+          legendPosition: 'middle',
           tickValues: weightTickRange,
         }}
       />

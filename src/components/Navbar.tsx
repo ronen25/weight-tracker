@@ -5,6 +5,7 @@ import Link from 'next/link';
 import LoadingSpinner from './LoadingSpinner';
 import { useAtom } from 'jotai';
 import UserDetailsAtom from '../atoms/UserDetailsAtom';
+import Image from 'next/image';
 
 interface Props {
   avatarUrl?: string;
@@ -43,15 +44,19 @@ const Navbar = ({ avatarUrl, signOutCallback }: Props) => {
           <div className='relative flex h-16 justify-between'>
             <div className='flex flex-1 items-center sm:items-stretch sm:justify-start'>
               <div className='flex flex-shrink-0 items-center self-center'>
-                <img
+                <Image
                   className='block h-8 w-auto lg:hidden'
                   src='https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500'
                   alt='Your Company'
+                  width={32}
+                  height={32}
                 />
-                <img
+                <Image
                   className='hidden h-8 w-auto lg:block'
                   src='https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500'
                   alt='Your Company'
+                  width={32}
+                  height={32}
                 />
 
                 <div className='ml-2 text-white'>{greeting()}</div>
@@ -73,11 +78,13 @@ const Navbar = ({ avatarUrl, signOutCallback }: Props) => {
                   <div>
                     <Menu.Button className='flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800'>
                       <span className='sr-only'>Open user menu</span>
-                      <img
+                      <Image
                         className='h-8 w-8 rounded-full'
                         src={avatarUrl}
                         alt=''
-                      />
+                        width={64}
+                        height={64}
+                      ></Image>
                     </Menu.Button>
                   </div>
                   <Transition

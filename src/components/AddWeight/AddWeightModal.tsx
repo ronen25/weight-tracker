@@ -9,7 +9,7 @@ import getErrorText from '../../lib/util/error';
 
 interface Props {
   open: boolean;
-  setOpen: any;
+  setOpen: (value: boolean) => void;
 }
 
 type Inputs = {

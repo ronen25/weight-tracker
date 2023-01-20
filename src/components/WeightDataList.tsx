@@ -1,9 +1,10 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import axios from "axios";
-import type { WeightType } from "../models/WeightData";
-import LoadingSpinner from "./LoadingSpinner";
-import NoWeights from "./NoWeights";
-import WeightItem from "./WeightItem";
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import axios from 'axios';
+import { useState } from 'react';
+import type { WeightType } from '../models/WeightData';
+import DeleteWeightModal from './AddWeight/DeleteWeightModal';
+import NoWeights from './NoWeights';
+import WeightItem from './WeightItem';
 
 interface Props {
   data: WeightType[];
@@ -11,33 +12,65 @@ interface Props {
 
 const WeightDataList = ({ data }: Props) => {
   const queryClient = useQueryClient();
-  const { isLoading, mutate: doDelete } = useMutation(
-    (date: Date) => axios.delete("/api/weights", { data: date }),
+  const [removeModalState, setRemoveModalState] = useState({
+    visible: false,
+    selectedId: 0,
+  });
+  const { isLoading, isError, error, mutate } = useMutation(
+    (id: number) =>
+      axios.delete('/api/weights', {
+        data: {
+          id: id,
+        },
+      }),
     {
       onSuccess: () => {
-        queryClient.invalidateQueries(["weights"]);
+        queryClient.invalidateQueries(['weights']);
+        setRemoveModalVisible(false);
       },
       retry: 0,
     }
   );
+
+  const setRemoveModalVisible = (isVisible: boolean) => {
+    setRemoveModalState((modalState) => ({
+      ...modalState,
+      visible: isVisible,
+    }));
+  };
+
+  const onDeleteWeightClick = (selectedId: number) => {
+    setRemoveModalState({
+      selectedId: selectedId,
+      visible: true,
+    });
+  };
+
   if (data.length === 0) {
     return <NoWeights />;
   }
 
-  const onDeleteClick = (date: Date) => {
-    doDelete(date);
-  };
-
   return (
-    <ul className="xs:mx-2 sm:mx-0 sm:w-[300px]">
-      {isLoading ? (
-        <LoadingSpinner />
-      ) : (
-        data.map((item, index) => (
-          <WeightItem key={index} weight={item} onDeleteClick={onDeleteClick} />
-        ))
-      )}
-    </ul>
+    <>
+      <DeleteWeightModal
+        isOpen={removeModalState.visible}
+        setOpen={setRemoveModalVisible}
+        onDeleteClick={() => mutate(removeModalState.selectedId)}
+        isLoading={isLoading}
+        isError={isError}
+        error={error}
+      />
+
+      <ul className='xs:mx-2 sm:mx-0 sm:w-[300px]'>
+        {data.map((item, index) => (
+          <WeightItem
+            key={index}
+            weight={item}
+            onDeleteClick={onDeleteWeightClick}
+          />
+        ))}
+      </ul>
+    </>
   );
 };
 

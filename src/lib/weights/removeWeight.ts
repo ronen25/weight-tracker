@@ -1,9 +1,9 @@
-import { prisma } from "../../server/db/client";
+import { prisma } from '../../server/db/client';
 
-const removeWeight = (date: Date) => {
+const removeWeight = (id: number) => {
   return prisma?.weights.delete({
     where: {
-      date: date,
+      id: id,
     },
   });
 };

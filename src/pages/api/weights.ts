@@ -4,7 +4,7 @@ import addWeight from '../../lib/weights/addWeight';
 import getWeights from '../../lib/weights/getWeights';
 import removeWeight from '../../lib/weights/removeWeight';
 import { DeleteRequestData } from '../../models/RequestData';
-import { Weight } from '../../models/WeightData';
+import { WeightData } from '../../models/WeightData';
 
 import { getServerAuthSession } from '../../server/common/get-server-auth-session';
 
@@ -26,7 +26,7 @@ const weights = async (req: NextApiRequest, res: NextApiResponse) => {
         req.body['date'] = new Date(req.body['date']);
       }
 
-      const weightData = Weight.parse(req.body);
+      const weightData = WeightData.parse(req.body);
       await addWeight(weightData, session.user?.id ?? '');
 
       return res.status(200).send({ data: { ...req.body } });

@@ -1,16 +1,24 @@
 import { z } from 'zod';
 
-const Weight = z.object({
-  id: z.number(),
+const WeightData = z.object({
   date: z.date(),
   value: z.number(),
   note: z.string(),
 });
 
-const WeightId = z.coerce.number();
+const Weight = WeightData.extend({
+  id: z.number(),
+});
 
+type WeightDataType = z.infer<typeof WeightData>;
 type WeightType = z.infer<typeof Weight>;
 
 const WeightsData = z.array(Weight);
 
-export { Weight, WeightId, type WeightType, WeightsData };
+export {
+  WeightData,
+  Weight,
+  type WeightDataType,
+  type WeightType,
+  WeightsData,
+};

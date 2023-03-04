@@ -2,7 +2,7 @@ import { Fragment, useRef } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { type SubmitHandler, useForm } from 'react-hook-form';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import type { WeightType } from '../../models/WeightData';
+import type { WeightDataType } from '../../models/WeightData';
 import axios from 'axios';
 import LoadingSpinner from '../LoadingSpinner';
 import getErrorText from '../../utils/error';
@@ -33,7 +33,7 @@ const AddWeightModal = ({ open, setOpen }: Props) => {
     error,
     mutate,
   } = useMutation(
-    (weightValue: WeightType) => axios.post('/api/weights', weightValue),
+    (weightValue: WeightDataType) => axios.post('/api/weights', weightValue),
     {
       onSuccess: () => {
         queryClient.invalidateQueries(['weights']);
@@ -45,8 +45,7 @@ const AddWeightModal = ({ open, setOpen }: Props) => {
   );
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
-    const weight: WeightType = {
-      id: 0,
+    const weight: WeightDataType = {
       date: new Date(data.date),
       value: data.value,
       note: data.note,
